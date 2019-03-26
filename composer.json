@@ -1,0 +1,31 @@
+{
+  "name": "lacuna/amplia-client",
+  "type": "library",
+  "description": "Classes to consume Lacuna Software's Amplia",
+  "keywords": [
+    "amplia",
+    "pki",
+    "client",
+    "rest",
+    "api",
+    "certificate",
+    "issue"
+  ],
+  "homepage": "https://amplia.lacunasoftware.com/",
+  "authors": [
+    {
+      "name": "Ismael Medeiros",
+      "email": "IsmaelM@lacunasoftware.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.0",
+    "ext-json": "*",
+    "guzzlehttp/guzzle": "^6.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Lacuna\\Amplia\\": "src/"
+    }
+  }
+}
