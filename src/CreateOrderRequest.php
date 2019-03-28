@@ -19,7 +19,7 @@ class CreateOrderRequest
     /**
      * @return string
      */
-    public function getCaId()
+    public function getCAId()
     {
         return $this->_caId;
     }
@@ -27,7 +27,7 @@ class CreateOrderRequest
     /**
      * @param string $caId
      */
-    public function setCaId($caId)
+    public function setCAId($caId)
     {
         $this->_caId = $caId;
     }
@@ -110,6 +110,74 @@ class CreateOrderRequest
     public function setValidityEnd($validityEnd)
     {
         $this->_validityEnd = $validityEnd;
+    }
+
+    public function __get($prop)
+    {
+        switch ($prop) {
+            case 'caId':
+                return $this->getCAId();
+            case 'templateId':
+                return $this->getTemplateId();
+            case 'kind':
+                return $this->getKind();
+            case 'copyToCertificate':
+                return $this->getCopyToCertificate();
+            case 'parameters':
+                return $this->getParameters();
+            case 'validityEnd':
+                return $this->getValidityEnd();
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $prop);
+                return null;
+        }
+    }
+
+    public function __isset($prop)
+    {
+        switch ($prop) {
+            case 'caId':
+                return isset($this->_caId);
+            case 'templateId':
+                return isset($this->_templateId);
+            case 'kind':
+                return isset($this->_kind);
+            case 'copyToCertificate':
+                return isset($this->_copyToCertificate);
+            case 'parameters':
+                return isset($this->_parameters);
+            case 'validityEnd':
+                return isset($this->_validityEnd);
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $prop);
+                return false;
+        }
+    }
+
+    public function __set($prop, $value)
+    {
+        switch ($prop) {
+            case 'caId':
+                $this->setCAId($value);
+                break;
+            case 'templateId':
+                $this->setTemplateId($value);
+                break;
+            case 'kind':
+                $this->setKind($value);
+                break;
+            case 'copyToCertificate':
+                $this->setCopyToCertificate($value);
+                break;
+            case 'parameters':
+                $this->setParameters($value);
+                break;
+            case 'validityEnd':
+                $this->setValidityEnd($value);
+                break;
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $prop);
+        }
     }
 
     public function toModel()
