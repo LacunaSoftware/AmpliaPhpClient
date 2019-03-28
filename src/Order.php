@@ -11,8 +11,8 @@ class Order extends BaseOrder
     {
         parent::__construct($model);
         if (isset($model)) {
-            if (isset($model['parameters'])) {
-                $this->_parameters = CertificateParameters::decode($parameters);
+            if (isset($model->parameters)) {
+                $this->_parameters = CertificateParameters::decode($model->parameters);
             }
         }
     }

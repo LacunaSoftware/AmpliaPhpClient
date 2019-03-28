@@ -16,13 +16,13 @@ class BaseOrder
     public function __construct($model = null)
     {
         if (isset($model)) {
-            $this->_id = $model['id'] ?: null;
-            $this->_caId = $model['caId'] ?: null;
-            $this->_templateId = $model['templateId'] ?: null;
-            $this->_alias = $model['alias'] ?: null;
-            $this->_emailAddress = $model['emailAddress'] ?: null;
-            $this->_certificateId = $model['certificateId'] ?: null;
-            $this->_status = $model['status'] ?: null;
+            $this->_id = $model->id ?: null;
+            $this->_caId = $model->caId ?: null;
+            $this->_templateId = $model->templateId ?: null;
+            $this->_alias = $model->alias ?: null;
+            $this->_emailAddress = $model->emailAddress ?: null;
+            $this->_certificateId = $model->certificateId ?: null;
+            $this->_status = $model->status ?: null;
         }
     }
 
