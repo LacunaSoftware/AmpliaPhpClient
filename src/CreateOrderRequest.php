@@ -112,5 +112,18 @@ class CreateOrderRequest
         $this->_validityEnd = $validityEnd;
     }
 
-
+    public function toModel()
+    {
+        $model = [
+            'caId' => $this->_caId,
+            'templateId' => $this->_templateId,
+            'kind' => $this->_kind,
+            'copyToCertificate' => $this->_copyToCertificate,
+            'validityEnd' => $this->_validityEnd
+        ];
+        if (isset($this->_parameters)) {
+            $model['parameters'] = $this->_parameters->toModel();
+        }
+        return $model;
+    }
 }
