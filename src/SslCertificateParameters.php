@@ -13,7 +13,7 @@ class SslCertificateParameters extends CertificateParameters
         $this->_format = CertificateFormats::SSL;
 
         if (isset($model)) {
-            $this->_dnsNames = $model['dnsNames'] ?: null;
+            $this->_dnsNames = $model->dnsNames ?: null;
         }
     }
 

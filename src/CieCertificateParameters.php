@@ -22,19 +22,19 @@ class CieCertificateParameters extends CertificateParameters
         parent::__construct($model);
         $this->_format = CertificateFormats::CIE;
         if (isset($model)) {
-            $this->_name = $model['name'] ?: null;
-            $this->_eea = $model['eea'] ?: null;
-            $this->_birthDate = $model['birthDate'] ?: null;
-            $this->_cpf = $model['cpf'] ?: null;
-            $this->_registrationNumber = $model['registrationNumber'] ?: null;
-            $this->_idNumber = $model['idNumber'] ?: null;
-            $this->_idIssuer = $model['idIssuer'] ?: null;
-            $this->_idIssuerState = $model['idIssuerState'] ?: null;
-            $this->_degree = $model['degree'] ?: null;
-            $this->_course = $model['course'] ?: null;
+            $this->_name = $model->name ?: null;
+            $this->_eea = $model->eea ?: null;
+            $this->_birthDate = $model->birthDate ?: null;
+            $this->_cpf = $model->cpf ?: null;
+            $this->_registrationNumber = $model->registrationNumber ?: null;
+            $this->_idNumber = $model->idNumber ?: null;
+            $this->_idIssuer = $model->idIssuer ?: null;
+            $this->_idIssuerState = $model->idIssuerState ?: null;
+            $this->_degree = $model->degree ?: null;
+            $this->_course = $model->course ?: null;
 
-            if (isset($model['institution'])) {
-                $this->_institution = new CieInstitution($model['institution']);
+            if (isset($model->institution)) {
+                $this->_institution = new CieInstitution($model->institution);
             }
         }
     }

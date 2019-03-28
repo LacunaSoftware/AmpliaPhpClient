@@ -15,11 +15,12 @@ class ArispCertificateParameters extends CertificateParameters
         parent::__construct($model);
         $this->_format = CertificateFormats::ARISP;
         if (isset($model)) {
-            $this->_nome = $model['nome'] ?: null;
-            $this->_cpf = $model['cpf'] ?: null;
-            $this->_funcao = $model['funcao'] ?: null;
-            if (isset($model['cartorio'])) {
-                $this->_cartorio = new ArispCartorioInfo($model['cartorio']);
+            $this->_nome = $model->nome ?: null;
+            $this->_cpf = $model->cpf ?: null;
+            $this->_funcao = $model->funcao ?: null;
+
+            if (isset($model->cartorio)) {
+                $this->_cartorio = new ArispCartorioInfo($model->cartorio);
             }
         }
     }

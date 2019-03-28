@@ -17,12 +17,12 @@ class CnbCACertificateParameters extends CertificateParameters
         parent::__construct($model);
         $this->_format = CertificateFormats::CNB_CA;
         if (isset($model)) {
-            $this->_name = $model['name'] ?: null;
-            $this->_cns = $model['cns'] ?: null;
-            $this->_streetAddress = $model['streetAddress'] ?: null;
-            $this->_locality = $model['locality'] ?: null;
-            $this->_stateName = $model['stateName'] ?: null;
-            $this->_postalCode = $model['postalCode'] ?: null;
+            $this->_name = $model->name ?: null;
+            $this->_cns = $model->cns ?: null;
+            $this->_streetAddress = $model->streetAddress ?: null;
+            $this->_locality = $model->locality ?: null;
+            $this->_stateName = $model->stateName ?: null;
+            $this->_postalCode = $model->postalCode ?: null;
         }
     }
 

@@ -26,21 +26,21 @@ class PkiBrazilCertificateParameters extends CertificateParameters
         parent::__construct($model);
         $this->_format = CertificateFormats::PKI_BRAZIL;
         if (isset($model)) {
-            $this->_name = $model['name'] ?: null;
-            $this->_emailAddress = $model['emailAddress'] ?: null;
-            $this->_cnpj = $model['cnpj'] ?: null;
-            $this->_companyName = $model['companyName'] ?: null;
-            $this->_cpf = $model['cpf'] ?: null;
-            $this->_birthDate = $model['birthDate'] ?: null;
-            $this->_oabUF = $model['oabUF'] ?: null;
-            $this->_oabNumero = $model['oabNumero'] ?: null;
-            $this->_rgEmissor = $model['rgEmissor'] ?: null;
-            $this->_rgEmissorUF = $model['rgEmissorUF'] ?: null;
-            $this->_rgNumero = $model['rgNumero'] ?: null;
-            $this->_organizationUnits = $model['organizationUnits'] ?: null;
-            $this->_organization = $model['organization'] ?: null;
-            $this->_country = $model['country'] ?: null;
-            $this->_phoneNumber = $model['phoneNumber'] ?: null;
+            $this->_name = $model->name ?: null;
+            $this->_emailAddress = $model->emailAddress ?: null;
+            $this->_cnpj = $model->cnpj ?: null;
+            $this->_companyName = $model->companyName ?: null;
+            $this->_cpf = $model->cpf ?: null;
+            $this->_birthDate = $model->birthDate ?: null;
+            $this->_oabUF = $model->oabUF ?: null;
+            $this->_oabNumero = $model->oabNumero ?: null;
+            $this->_rgEmissor = $model->rgEmissor ?: null;
+            $this->_rgEmissorUF = $model->rgEmissorUF ?: null;
+            $this->_rgNumero = $model->rgNumero ?: null;
+            $this->_organizationUnits = $model->organizationUnits ?: null;
+            $this->_organization = $model->organization ?: null;
+            $this->_country = $model->country ?: null;
+            $this->_phoneNumber = $model->phoneNumber ?: null;
         }
     }
 

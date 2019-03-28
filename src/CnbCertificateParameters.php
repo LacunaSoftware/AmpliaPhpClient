@@ -13,7 +13,7 @@ class CnbCertificateParameters extends PkiBrazilCertificateParameters
         $this->_format = CertificateFormats::CNB;
 
         if (isset($model)) {
-            $this->_certificateType = $model['certificateType'];
+            $this->_certificateType = $model->certificateType ?: null;
         }
     }
 

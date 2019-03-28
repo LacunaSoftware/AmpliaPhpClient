@@ -31,7 +31,7 @@ class CertificateParameters
 
     static function decode($model)
     {
-        $format = $model['format'];
+        $format = $model->format;
         if (!isset($format)) {
             throw new \InvalidArgumentException('The provided model doesn\'t have a "format" field.');
         }

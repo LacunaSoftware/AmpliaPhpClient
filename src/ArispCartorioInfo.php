@@ -17,16 +17,16 @@ class ArispCartorioInfo
     public function __construct($model = null)
     {
         if (isset($model)) {
-            $this->_cns = $model['cns'] ?: null;
-            $this->_numero = $model['numero'] ?: null;
-            $this->_nome = $model['nome'] ?: null;
-            $this->_oficial = $model['oficial'] ?: null;
-            $this->_telefone = $model['telefone'] ?: null;
-            $this->_site = $model['site'] ?: null;
-            $this->_email = $model['email'] ?: null;
+            $this->_cns = $model->cns ?: null;
+            $this->_numero = $model->numero ?: null;
+            $this->_nome = $model->nome ?: null;
+            $this->_oficial = $model->oficial ?: null;
+            $this->_telefone = $model->telefone ?: null;
+            $this->_site = $model->site ?: null;
+            $this->_email = $model->email ?: null;
 
-            if (isset($model['endereco'])) {
-                $this->_endereco = new ArispEndereco($model['endereco']);
+            if (isset($model->endereco)) {
+                $this->_endereco = new ArispEndereco($model->endereco);
             }
         }
     }

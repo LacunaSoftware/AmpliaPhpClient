@@ -12,9 +12,9 @@ class CieInstitution
     public function __construct($model = null)
     {
         if (isset($model)) {
-            $this->_name = $model['name'] ?: null;
-            $this->_city = $model['city'] ?: null;
-            $this->_state = $model['state'] ?: null;
+            $this->_name = $model->name ?: null;
+            $this->_city = $model->city ?: null;
+            $this->_state = $model->state ?: null;
         }
     }
 

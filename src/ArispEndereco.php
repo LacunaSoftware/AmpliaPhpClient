@@ -17,14 +17,14 @@ class ArispEndereco
     public function __construct($model = null)
     {
         if (isset($model)) {
-            $this->_logradouro = $model['logradouro'] ?: null;
-            $this->_numero = $model['numero'] ?: null;
-            $this->_complemento = $model['complemento'] ?: null;
-            $this->_distrito = $model['distrito'] ?: null;
-            $this->_comarca = $model['comarca'] ?: null;
-            $this->_municipio = $model['municipio'] ?: null;
-            $this->_estado = $model['estado'] ?: null;
-            $this->_cep = $model['cep'] ?: null;
+            $this->_logradouro = $model->logradouro ?: null;
+            $this->_numero = $model->numero ?: null;
+            $this->_complemento = $model->complemento ?: null;
+            $this->_distrito = $model->distrito ?: null;
+            $this->_comarca = $model->comarca ?: null;
+            $this->_municipio = $model->municipio ?: null;
+            $this->_estado = $model->estado ?: null;
+            $this->_cep = $model->cep ?: null;
         }
     }
 
