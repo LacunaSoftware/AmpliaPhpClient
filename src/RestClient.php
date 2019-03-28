@@ -59,7 +59,7 @@ class RestClient
             if (empty($data)) {
                 $httpResponse = $client->post($url);
             } else {
-                $httpResponse = $client->post($url, array('json' => $data->getModel()));
+                $httpResponse = $client->post($url, array('json' => $data->toModel()));
             }
         } catch (TransferException $ex) {
             throw new RestUnreachableException($verb, $url, $ex);
