@@ -83,7 +83,7 @@ class AmpliaClient
         }
         $client = $this->_getRestClient();
 
-        $url = 'api/orders/{$orderId}/issue-link';
+        $url = "api/orders/{$orderId}/issue-link";
         if (isset($returnUrl)) {
             $encodedUrl = urlencode($returnUrl);
             $url .= "?returnUrl={$encodedUrl}";

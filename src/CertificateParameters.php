@@ -11,7 +11,7 @@ class CertificateParameters
     public function __construct($model = null)
     {
         if (isset($model)) {
-            $this->_format = $model['format'];
+            $this->_format = $model->format;
         }
     }
 
