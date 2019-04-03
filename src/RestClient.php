@@ -6,12 +6,40 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\TransferException;
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * Class RestClient
+ * @package Lacuna\Amplia
+ *
+ * @property $endpointUri string
+ * @property $apiKey string
+ * @property $customRequestHeaders array
+ */
 class RestClient
 {
+    /**
+     * @private
+     * @var string
+     */
     private $_endpointUri;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_apiKey;
+
+    /**
+     * @private
+     * @var array
+     */
     private $_customRequestHeaders;
 
+    /**
+     * RestClient constructor.
+     * @param $endpointUri
+     * @param $apiKey
+     * @param array $customRequestHeaders
+     */
     public function __construct($endpointUri, $apiKey, $customRequestHeaders = [])
     {
         $this->_endpointUri = $endpointUri;
@@ -59,7 +87,7 @@ class RestClient
             if (empty($data)) {
                 $httpResponse = $client->post($url);
             } else {
-                $httpResponse = $client->post($url, array('json' => $data->toModel()));
+                $httpResponse = $client->post($url, array('json' => $data));
             }
         } catch (TransferException $ex) {
             throw new RestUnreachableException($verb, $url, $ex);
@@ -91,6 +119,10 @@ class RestClient
         return HttpResponse::getInstance($httpResponse);
     }
 
+    /**
+     * @private
+     * @return Client
+     */
     private function _getClient()
     {
         $headers = [
@@ -110,6 +142,7 @@ class RestClient
     }
 
     /**
+     * @private
      * @param $verb string
      * @param $url string
      * @param $httpResponse ResponseInterface
@@ -123,9 +156,9 @@ class RestClient
         if ($statusCode < 200 || $statusCode > 299) {
             $ex = null;
             try {
-                $response = json_decode($httpResponse->getBody());
+                $response = Util::decodeJson($httpResponse->getBody());
                 if ($statusCode == 422 && isset($response->code)) {
-                    if ($response->code == "OrderLocked") {
+                    if ($response->code == ErrorCodes::ORDER_LOCKED) {
                         $ex = new OrderLockedException($verb, $url, $response->message);
                     } else {
                         $ex = new AmpliaException($verb, $url, $response);
@@ -141,7 +174,7 @@ class RestClient
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getEndpointUri()
     {
@@ -149,7 +182,7 @@ class RestClient
     }
 
     /**
-     * @param mixed $endpointUri
+     * @param string $endpointUri
      */
     public function setEndpointUri($endpointUri)
     {
@@ -157,7 +190,7 @@ class RestClient
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getApiKey()
     {
@@ -165,7 +198,7 @@ class RestClient
     }
 
     /**
-     * @param mixed $apiKey
+     * @param string $apiKey
      */
     public function setApiKey($apiKey)
     {
@@ -173,7 +206,7 @@ class RestClient
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getCustomRequestHeaders()
     {
@@ -181,18 +214,25 @@ class RestClient
     }
 
     /**
-     * @param mixed $customRequestHeaders
+     * @param array $customRequestHeaders
      */
     public function setCustomRequestHeaders($customRequestHeaders)
     {
         $this->_customRequestHeaders = $customRequestHeaders;
     }
 
+    /**
+     * @param $key
+     * @param $value
+     */
     public function addCustomRequestHeaders($key, $value)
     {
         $this->_customRequestHeaders[$key] = $value;
     }
 
+    /**
+     * @param $key
+     */
     public function removeCustomRequestHeaders($key)
     {
         if (isset($this->_customRequestHeaders[$key])) {

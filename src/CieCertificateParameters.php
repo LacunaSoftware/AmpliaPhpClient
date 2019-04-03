@@ -2,37 +2,129 @@
 
 namespace Lacuna\Amplia;
 
-
+/**
+ * Class CieCertificateParameters
+ * @package Lacuna\Amplia
+ *
+ * @property $name string
+ * @property $eea string
+ * @property $birthDate string
+ * @property $cpf string
+ * @property $registrationNumber string
+ * @property $idNumber string
+ * @property $idIssuer string
+ * @property $idIssuerState string
+ * @property $institution CieInstitution
+ * @property $degree string
+ * @property $course string
+ */
 class CieCertificateParameters extends CertificateParameters
 {
+    /**
+     * @private
+     * @var string
+     */
     private $_name;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_eea;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_birthDate;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_cpf;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_registrationNumber;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_idNumber;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_idIssuer;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_idIssuerState;
+
+    /**
+     * @private
+     * @var CieInstitution
+     */
     private $_institution;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_degree;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_course;
 
+    /**
+     * CieCertificateParameters constructor.
+     * @param mixed $model
+     */
     public function __construct($model = null)
     {
         parent::__construct($model);
         $this->_format = CertificateFormats::CIE;
         if (isset($model)) {
-            $this->_name = $model->name ?: null;
-            $this->_eea = $model->eea ?: null;
-            $this->_birthDate = $model->birthDate ?: null;
-            $this->_cpf = $model->cpf ?: null;
-            $this->_registrationNumber = $model->registrationNumber ?: null;
-            $this->_idNumber = $model->idNumber ?: null;
-            $this->_idIssuer = $model->idIssuer ?: null;
-            $this->_idIssuerState = $model->idIssuerState ?: null;
-            $this->_degree = $model->degree ?: null;
-            $this->_course = $model->course ?: null;
-
+            if (isset($model->name)) {
+                $this->_name = $model->name;
+            }
+            if (isset($model->eea)) {
+                $this->_eea = $model->eea;
+            }
+            if (isset($model->birthDate)) {
+                $this->_birthDate = $model->birthDate;
+            }
+            if (isset($model->cpf)) {
+                $this->_cpf = $model->cpf;
+            }
+            if (isset($model->registrationNumber)) {
+                $this->_registrationNumber = $model->registrationNumber;
+            }
+            if (isset($model->idNumber)) {
+                $this->_idNumber = $model->idNumber;
+            }
+            if (isset($model->idIssuer)) {
+                $this->_idIssuer = $model->idIssuer;
+            }
+            if (isset($model->idIssuerState)) {
+                $this->_idIssuerState = $model->idIssuerState;
+            }
+            if (isset($model->degree)) {
+                $this->_degree = $model->degree;
+            }
+            if (isset($model->course)) {
+                $this->_course = $model->course;
+            }
             if (isset($model->institution)) {
                 $this->_institution = new CieInstitution($model->institution);
             }

@@ -2,7 +2,10 @@
 
 namespace Lacuna\Amplia;
 
-
+/**
+ * Class CertificateFormats
+ * @package Lacuna\Amplia
+ */
 class CertificateFormats
 {
     const PKI_BRAZIL = 'PkiBrazil';

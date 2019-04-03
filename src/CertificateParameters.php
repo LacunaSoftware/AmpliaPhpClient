@@ -3,26 +3,48 @@
 namespace Lacuna\Amplia;
 
 
-
+/**
+ * Class CertificateParameters
+ * @package Lacuna\Amplia
+ *
+ * @property $format CertificateFormats
+ */
 class CertificateParameters
 {
+    /**
+     * @private
+     * @var string
+     */
     protected $_format;
 
+    /**
+     * CertificateParameters constructor.
+     * @param mixed $model
+     */
     public function __construct($model = null)
     {
         if (isset($model)) {
-            $this->_format = $model->format;
+            if (isset($model->format)) {
+                $this->_format = $model->format;
+            }
         }
     }
 
+    /**
+     * @param $parameters
+     * @return string
+     */
     static function encode($parameters)
     {
-        return json_encode($parameters);
+        return Util::encodeJson($parameters);
     }
 
+    /**
+     * @param $json
+     */
     static function decodeJson($json)
     {
-        $model = json_decode($json);
+        $model = Util::decodeJson($json);
         if (!isset($model)) {
             throw new \InvalidArgumentException('Invalid template parameters JSON.');
         }
@@ -55,7 +77,7 @@ class CertificateParameters
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getFormat()
     {
@@ -63,7 +85,7 @@ class CertificateParameters
     }
 
     /**
-     * @param mixed $format
+     * @param string $format
      */
     public function setFormat($format)
     {

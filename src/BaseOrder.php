@@ -2,32 +2,95 @@
 
 namespace Lacuna\Amplia;
 
-
+/**
+ * Class BaseOrder
+ * @package Lacuna\Amplia
+ *
+ * @property $id string
+ * @property $caId string
+ * @property $templateId string
+ * @property $alias string
+ * @property $emailAddress string
+ * @property $certificateId string
+ * @property $status string
+ */
 class BaseOrder
 {
+    /**
+     * @private
+     * @var string
+     */
     private $_id;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_caId;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_templateId;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_alias;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_emailAddress;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_certificateId;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_status;
 
+    /**
+     * BaseOrder constructor.
+     * @param mixed $model
+     */
     public function __construct($model = null)
     {
         if (isset($model)) {
-            $this->_id = $model->id ?: null;
-            $this->_caId = $model->caId ?: null;
-            $this->_templateId = $model->templateId ?: null;
-            $this->_alias = $model->alias ?: null;
-            $this->_emailAddress = $model->emailAddress ?: null;
-            $this->_certificateId = $model->certificateId ?: null;
-            $this->_status = $model->status ?: null;
+            if (isset($model->id)) {
+                $this->_id = $model->id;
+            }
+            if (isset($model->caId)) {
+                $this->_caId = $model->caId;
+            }
+            if (isset($model->templateId)) {
+                $this->_templateId = $model->templateId;
+            }
+            if (isset($model->alias)) {
+                $this->_alias = $model->alias;
+            }
+            if (isset($model->emailAddress)) {
+                $this->_emailAddress = $model->emailAddress;
+            }
+            if (isset($model->certificateId)) {
+                $this->_certificateId = $model->certificateId;
+            }
+            if (isset($model->status)) {
+                $this->_status = $model->status;
+            }
         }
     }
 
     /**
-     * @return null
+     * @return string
      */
     public function getId()
     {
@@ -35,7 +98,7 @@ class BaseOrder
     }
 
     /**
-     * @param null $id
+     * @param string $id
      */
     public function setId($id)
     {
@@ -43,7 +106,7 @@ class BaseOrder
     }
 
     /**
-     * @return null
+     * @return string
      */
     public function getCAId()
     {
@@ -51,7 +114,7 @@ class BaseOrder
     }
 
     /**
-     * @param null $caId
+     * @param string $caId
      */
     public function setCAId($caId)
     {
@@ -59,7 +122,7 @@ class BaseOrder
     }
 
     /**
-     * @return null
+     * @return string
      */
     public function getTemplateId()
     {
@@ -67,7 +130,7 @@ class BaseOrder
     }
 
     /**
-     * @param null $templateId
+     * @param string $templateId
      */
     public function setTemplateId($templateId)
     {
@@ -75,7 +138,7 @@ class BaseOrder
     }
 
     /**
-     * @return null
+     * @return string
      */
     public function getAlias()
     {
@@ -83,7 +146,7 @@ class BaseOrder
     }
 
     /**
-     * @param null $alias
+     * @param string $alias
      */
     public function setAlias($alias)
     {
@@ -91,7 +154,7 @@ class BaseOrder
     }
 
     /**
-     * @return null
+     * @return string
      */
     public function getEmailAddress()
     {
@@ -99,7 +162,7 @@ class BaseOrder
     }
 
     /**
-     * @param null $emailAddress
+     * @param string $emailAddress
      */
     public function setEmailAddress($emailAddress)
     {
@@ -107,7 +170,7 @@ class BaseOrder
     }
 
     /**
-     * @return null
+     * @return string
      */
     public function getCertificateId()
     {
@@ -115,7 +178,7 @@ class BaseOrder
     }
 
     /**
-     * @param null $certificateId
+     * @param string $certificateId
      */
     public function setCertificateId($certificateId)
     {
@@ -123,7 +186,7 @@ class BaseOrder
     }
 
     /**
-     * @return null
+     * @return string
      */
     public function getStatus()
     {
@@ -131,7 +194,7 @@ class BaseOrder
     }
 
     /**
-     * @param null $status
+     * @param string $status
      */
     public function setStatus($status)
     {

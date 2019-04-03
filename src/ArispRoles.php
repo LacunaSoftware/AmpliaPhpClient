@@ -2,7 +2,10 @@
 
 namespace Lacuna\Amplia;
 
-
+/**
+ * Class ArispRoles
+ * @package Lacuna\Amplia
+ */
 class ArispRoles
 {
     const TABELIAO = 'Tabeliao';

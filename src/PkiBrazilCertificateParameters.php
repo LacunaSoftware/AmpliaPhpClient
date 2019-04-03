@@ -2,23 +2,116 @@
 
 namespace Lacuna\Amplia;
 
-
+/**
+ * Class PkiBrazilCertificateParameters
+ * @package Lacuna\Amplia
+ *
+ * @property $name string
+ * @property $emailAddress string
+ * @property $cnpj string
+ * @property $companyName string
+ * @property $cpf string
+ * @property $birthDate string
+ * @property $oabUF string
+ * @property $oabNumero string
+ * @property $rgEmissor string
+ * @property $rgEmissorUF string
+ * @property $rgNumero string
+ * @property $organizationUnits array
+ * @property $organization string
+ * @property $country string
+ * @property $phoneNumber string
+ */
 class PkiBrazilCertificateParameters extends CertificateParameters
 {
+    /**
+     * @private
+     * @var string
+     */
     private $_name;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_emailAddress;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_cnpj;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_companyName;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_cpf;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_birthDate;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_oabUF;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_oabNumero;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_rgEmissor;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_rgEmissorUF;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_rgNumero;
+
+    /**
+     * @private
+     * @var array
+     */
     private $_organizationUnits;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_organization;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_country;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_phoneNumber;
 
     public function __construct($model = null)
@@ -26,21 +119,51 @@ class PkiBrazilCertificateParameters extends CertificateParameters
         parent::__construct($model);
         $this->_format = CertificateFormats::PKI_BRAZIL;
         if (isset($model)) {
-            $this->_name = $model->name ?: null;
-            $this->_emailAddress = $model->emailAddress ?: null;
-            $this->_cnpj = $model->cnpj ?: null;
-            $this->_companyName = $model->companyName ?: null;
-            $this->_cpf = $model->cpf ?: null;
-            $this->_birthDate = $model->birthDate ?: null;
-            $this->_oabUF = $model->oabUF ?: null;
-            $this->_oabNumero = $model->oabNumero ?: null;
-            $this->_rgEmissor = $model->rgEmissor ?: null;
-            $this->_rgEmissorUF = $model->rgEmissorUF ?: null;
-            $this->_rgNumero = $model->rgNumero ?: null;
-            $this->_organizationUnits = $model->organizationUnits ?: null;
-            $this->_organization = $model->organization ?: null;
-            $this->_country = $model->country ?: null;
-            $this->_phoneNumber = $model->phoneNumber ?: null;
+            if (isset($model->name)) {
+                $this->_name = $model->name;
+            }
+            if (isset($model->emailAddress)) {
+                $this->_emailAddress = $model->emailAddress;
+            }
+            if (isset($model->cnpj)) {
+                $this->_cnpj = $model->cnpj;
+            }
+            if (isset($model->companyName)) {
+                $this->_companyName = $model->companyName;
+            }
+            if (isset($model->cpf)) {
+                $this->_cpf = $model->cpf;
+            }
+            if (isset($model->birthDate)) {
+                $this->_birthDate = $model->birthDate;
+            }
+            if (isset($model->oabUF)) {
+                $this->_oabUF = $model->oabUF;
+            }
+            if (isset($model->oabNumero)) {
+                $this->_oabNumero = $model->oabNumero;
+            }
+            if (isset($model->rgEmissor)) {
+                $this->_rgEmissor = $model->rgEmissor;
+            }
+            if (isset($model->rgEmissorUF)) {
+                $this->_rgEmissorUF = $model->rgEmissorUF;
+            }
+            if (isset($model->rgNumero)) {
+                $this->_rgNumero = $model->rgNumero;
+            }
+            if (isset($model->organizationUnits)) {
+                $this->_organizationUnits = $model->organizationUnits;
+            }
+            if (isset($model->organization)) {
+                $this->_organization = $model->organization;
+            }
+            if (isset($model->country)) {
+                $this->_country = $model->country;
+            }
+            if (isset($model->phoneNumber)) {
+                $this->_phoneNumber = $model->phoneNumber;
+            }
         }
     }
 

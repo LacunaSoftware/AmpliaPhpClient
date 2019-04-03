@@ -2,14 +2,53 @@
 
 namespace Lacuna\Amplia;
 
-
+/**
+ * Class CreateOrderRequest
+ * @package Lacuna\Amplia
+ *
+ * @property $caId string
+ * @property $templateId string
+ * @property $kind CertificateKinds
+ * @property $copyFromCertificate string
+ * @property $parameters CertificateParameters
+ * @property $validityEnd string
+ */
 class CreateOrderRequest
 {
+    /**
+     * @private
+     * @var string
+     */
     private $_caId;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_templateId;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_kind;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_copyToCertificate;
+
+    /**
+     * @private
+     * @var CertificateParameters
+     */
     private $_parameters;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_validityEnd;
 
     public function __construct()
@@ -49,7 +88,7 @@ class CreateOrderRequest
     }
 
     /**
-     * @return CertificateKinds
+     * @return string
      */
     public function getKind()
     {
@@ -57,7 +96,7 @@ class CreateOrderRequest
     }
 
     /**
-     * @param CertificateKinds $kind
+     * @param string $kind
      */
     public function setKind($kind)
     {

@@ -2,12 +2,35 @@
 
 namespace Lacuna\Amplia;
 
-
+/**
+ * Class RestErrorException
+ * @package Lacuna\Amplia
+ *
+ * @property $statusCode int
+ * @property $errorMessage string
+ */
 class RestErrorException extends RestException
 {
+    /**
+     * @private
+     * @var int
+     */
     private $_statusCode;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_errorMessage;
 
+    /**
+     * RestErrorException constructor.
+     *
+     * @param string $verb
+     * @param string $url
+     * @param int $statusCode
+     * @param string $errorMessage
+     */
     public function __construct($verb, $url, $statusCode, $errorMessage = null)
     {
         $message = "REST action {$verb} {$url} returned HTTP error {$statusCode}";
@@ -20,7 +43,7 @@ class RestErrorException extends RestException
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getStatusCode()
     {
@@ -28,7 +51,7 @@ class RestErrorException extends RestException
     }
 
     /**
-     * @param mixed $statusCode
+     * @param int $statusCode
      */
     public function setStatusCode($statusCode)
     {
@@ -36,7 +59,7 @@ class RestErrorException extends RestException
     }
 
     /**
-     * @return null
+     * @return string
      */
     public function getErrorMessage()
     {
@@ -44,7 +67,7 @@ class RestErrorException extends RestException
     }
 
     /**
-     * @param null $errorMessage
+     * @param string $errorMessage
      */
     public function setErrorMessage($errorMessage)
     {

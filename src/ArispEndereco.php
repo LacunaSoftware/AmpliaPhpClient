@@ -2,29 +2,100 @@
 
 namespace Lacuna\Amplia;
 
-
+/**
+ * Class ArispEndereco
+ * @package Lacuna\Amplia
+ *
+ * @property $logradouro string
+ * @property $numero string
+ * @property $complemento string
+ * @property $distrito string
+ * @property $comarca string
+ * @property $municipio string
+ * @property $estado string
+ * @property $cep string
+ */
 class ArispEndereco
 {
+    /**
+     * @private
+     * @var string
+     */
     private $_logradouro;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_numero;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_complemento;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_distrito;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_comarca;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_municipio;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_estado;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_cep;
 
+    /**
+     * ArispEndereco constructor.
+     * @param mixed $model
+     */
     public function __construct($model = null)
     {
         if (isset($model)) {
-            $this->_logradouro = $model->logradouro ?: null;
-            $this->_numero = $model->numero ?: null;
-            $this->_complemento = $model->complemento ?: null;
-            $this->_distrito = $model->distrito ?: null;
-            $this->_comarca = $model->comarca ?: null;
-            $this->_municipio = $model->municipio ?: null;
-            $this->_estado = $model->estado ?: null;
-            $this->_cep = $model->cep ?: null;
+            if (isset($model->logradouro)) {
+                $this->_logradouro = $model->logradouro;
+            }
+            if (isset($model->numero)) {
+                $this->_numero = $model->numero;
+            }
+            if (isset($model->complemento)) {
+                $this->_complemento = $model->complemento;
+            }
+            if (isset($model->distrito)) {
+                $this->_distrito = $model->distrito;
+            }
+            if (isset($model->comarca)) {
+                $this->_comarca = $model->comarca;
+            }
+            if (isset($model->municipio)) {
+                $this->_municipio = $model->municipio;
+            }
+            if (isset($model->estado)) {
+                $this->_estado = $model->estado;
+            }
+            if (isset($model->cep)) {
+                $this->_cep = $model->cep;
+            }
         }
     }
 

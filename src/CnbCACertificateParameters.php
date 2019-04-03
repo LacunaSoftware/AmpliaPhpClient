@@ -2,27 +2,82 @@
 
 namespace Lacuna\Amplia;
 
-
+/**
+ * Class CnbCACertificateParameters
+ * @package Lacuna\Amplia
+ *
+ * @property $name string
+ * @property $cns string
+ * @property $streetAddress string
+ * @property $locality string
+ * @property $stateName string
+ * @property $postalCode string
+ */
 class CnbCACertificateParameters extends CertificateParameters
 {
+    /**
+     * @private
+     * @var string
+     */
     private $_name;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_cns;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_streetAddress;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_locality;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_stateName;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_postalCode;
 
+    /**
+     * CnbCACertificateParameters constructor.
+     * @param mixed $model
+     */
     public function __construct($model = null)
     {
         parent::__construct($model);
         $this->_format = CertificateFormats::CNB_CA;
         if (isset($model)) {
-            $this->_name = $model->name ?: null;
-            $this->_cns = $model->cns ?: null;
-            $this->_streetAddress = $model->streetAddress ?: null;
-            $this->_locality = $model->locality ?: null;
-            $this->_stateName = $model->stateName ?: null;
-            $this->_postalCode = $model->postalCode ?: null;
+            if (isset($model->name)) {
+                $this->_name = $model->name;
+            }
+            if (isset($model->cns)) {
+                $this->_cns = $model->cns;
+            }
+            if (isset($model->streetAddress)) {
+                $this->_streetAddress = $model->streetAddress;
+            }
+            if (isset($model->locality)) {
+                $this->_locality = $model->locality;
+            }
+            if (isset($model->stateName)) {
+                $this->_stateName = $model->stateName;
+            }
+            if (isset($model->postalCode)) {
+                $this->_postalCode = $model->postalCode;
+            }
         }
     }
 
