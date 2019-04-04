@@ -6,17 +6,71 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\TransferException;
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * Class RestClient
+ * @package Lacuna\Amplia
+ *
+ * @property $endpointUri string
+ * @property $apiKey string
+ * @property $customRequestHeaders array
+ * @property $usePhpCAInfo bool
+ * @property $caInfoPath string
+ */
 class RestClient
 {
+    /**
+     * @private
+     * @var string
+     */
     private $_endpointUri;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_apiKey;
+
+    /**
+     * @private
+     * @var array
+     */
     private $_customRequestHeaders;
 
-    public function __construct($endpointUri, $apiKey, $customRequestHeaders = [])
-    {
+    /**
+     * @private
+     * @var bool
+     */
+    private $_usePhpCAInfo;
+
+    /**
+     * @private
+     * @var string
+     */
+    private $_caInfoPath;
+
+    /**
+     * RestClient constructor.
+     * @param $endpointUri
+     * @param $apiKey
+     * @param array $customRequestHeaders
+     * @param bool $usePhpCAInfo
+     * @param string|null $caInfoPath
+     */
+    public function __construct(
+        $endpointUri,
+        $apiKey,
+        $customRequestHeaders = [],
+        $usePhpCAInfo = false,
+        $caInfoPath = null
+    ) {
         $this->_endpointUri = $endpointUri;
         $this->_apiKey = $apiKey;
         $this->_customRequestHeaders = $customRequestHeaders;
+        $this->_usePhpCAInfo = $usePhpCAInfo;
+
+        if (!isset($caInfoPath)) {
+            $this->_caInfoPath = __DIR__ . '/../resources/cacert.pem';
+        }
     }
 
     /**
@@ -91,6 +145,10 @@ class RestClient
         return HttpResponse::getInstance($httpResponse);
     }
 
+    /**
+     * @private
+     * @return Client
+     */
     private function _getClient()
     {
         $headers = [
@@ -102,14 +160,28 @@ class RestClient
         foreach ($this->_customRequestHeaders as $key => $value) {
             $headers[$key] = $value;
         }
+
+        $verify = true;
+        if (!$this->_usePhpCAInfo) {
+            if (!isset($this->_caInfoPath)) {
+                throw new \UnexpectedValueException('No CA certificates path was provided. Set the "usePhpCAInfo" variable to true if you want to use the default value that your PHP uses.');
+            }
+            if (!file_exists($this->_caInfoPath)) {
+                throw new \InvalidArgumentException("The provided cacert file does not exist: {$this->_caInfoPath}.");
+            }
+            $verify = $this->_caInfoPath;
+        }
+
         return new Client([
-            'base_uri'    => $this->_endpointUri,
-            'headers'     => $headers,
-            'http_errors' => false
+            'base_uri' => $this->_endpointUri,
+            'headers' => $headers,
+            'http_errors' => false,
+            'verify' => $verify
         ]);
     }
 
     /**
+     * @private
      * @param $verb string
      * @param $url string
      * @param $httpResponse ResponseInterface
@@ -123,15 +195,17 @@ class RestClient
         if ($statusCode < 200 || $statusCode > 299) {
             $ex = null;
             try {
-                $response = json_decode($httpResponse->getBody());
+                $response = Util::decodeJson($httpResponse->getBody());
                 if ($statusCode == 422 && isset($response->code)) {
-                    if ($response->code == "OrderLocked") {
-                        $ex = new OrderLockedException($verb, $url, $response->message);
+                    if ($response->code == ErrorCodes::ORDER_LOCKED) {
+                        $ex = new OrderLockedException($verb, $url,
+                            $response->message);
                     } else {
                         $ex = new AmpliaException($verb, $url, $response);
                     }
                 } else {
-                    $ex = new RestErrorException($verb, $url, $statusCode, $response->message);
+                    $ex = new RestErrorException($verb, $url, $statusCode,
+                        $response->message);
                 }
             } catch (\Exception $e) {
                 $ex = new RestErrorException($verb, $url, $statusCode);
@@ -141,7 +215,7 @@ class RestClient
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getEndpointUri()
     {
@@ -149,7 +223,7 @@ class RestClient
     }
 
     /**
-     * @param mixed $endpointUri
+     * @param string $endpointUri
      */
     public function setEndpointUri($endpointUri)
     {
@@ -157,7 +231,7 @@ class RestClient
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getApiKey()
     {
@@ -165,7 +239,7 @@ class RestClient
     }
 
     /**
-     * @param mixed $apiKey
+     * @param string $apiKey
      */
     public function setApiKey($apiKey)
     {
@@ -173,7 +247,7 @@ class RestClient
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getCustomRequestHeaders()
     {
@@ -181,23 +255,62 @@ class RestClient
     }
 
     /**
-     * @param mixed $customRequestHeaders
+     * @param array $customRequestHeaders
      */
     public function setCustomRequestHeaders($customRequestHeaders)
     {
         $this->_customRequestHeaders = $customRequestHeaders;
     }
 
+    /**
+     * @param $key
+     * @param $value
+     */
     public function addCustomRequestHeaders($key, $value)
     {
         $this->_customRequestHeaders[$key] = $value;
     }
 
+    /**
+     * @param $key
+     */
     public function removeCustomRequestHeaders($key)
     {
         if (isset($this->_customRequestHeaders[$key])) {
             unset($this->_customRequestHeaders[$key]);
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public function getUsePhpCAInfo()
+    {
+        return $this->_usePhpCAInfo;
+    }
+
+    /**
+     * @param bool $usePhpCAInfo
+     */
+    public function setUsePhpCAInfo($usePhpCAInfo)
+    {
+        $this->_usePhpCAInfo = $usePhpCAInfo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCAInfoPath()
+    {
+        return $this->_caInfoPath;
+    }
+
+    /**
+     * @param string $caInfoPath
+     */
+    public function setCAInfoPath($caInfoPath)
+    {
+        $this->_caInfoPath = $caInfoPath;
     }
 
     public function __get($prop)
@@ -209,6 +322,10 @@ class RestClient
                 return $this->getApiKey();
             case 'customRequestHeaders':
                 return $this->getCustomRequestHeaders();
+            case 'usePhpCAInfo':
+                return $this->getUsePhpCAInfo();
+            case 'caInfoPath':
+                return $this->getCAInfoPath();
             default:
                 trigger_error('Undefined property: ' . __CLASS__ . '::$' . $prop);
                 return null;
@@ -224,6 +341,10 @@ class RestClient
                 return isset($this->_apiKey);
             case 'customRequestHeaders':
                 return isset($this->_customRequestHeaders);
+            case 'usePhpCAInfo':
+                return isset($this->_usePhpCAInfo);
+            case 'caInfoPath':
+                return isset($this->_caInfoPath);
             default:
                 trigger_error('Undefined property: ' . __CLASS__ . '::$' . $prop);
                 return false;
@@ -241,6 +362,12 @@ class RestClient
                 break;
             case 'customRequestHeaders':
                 $this->setCustomRequestHeaders($value);
+                break;
+            case 'usePhpCAInfo':
+                $this->setUsePhpCAInfo($value);
+                break;
+            case 'caInfoPath':
+                $this->setCAInfoPath($value);
                 break;
             default:
                 trigger_error('Undefined property: ' . __CLASS__ . '::$' . $prop);

@@ -2,19 +2,50 @@
 
 namespace Lacuna\Amplia;
 
-
+/**
+ * Class CieInstitution
+ * @package Lacuna\Amplia
+ *
+ * @property $name string
+ * @property $city string
+ * @property $state string
+ */
 class CieInstitution
 {
+    /**
+     * @private
+     * @var string
+     */
     private $_name;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_city;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_state;
 
+    /**
+     * CieInstitution constructor.
+     * @param mixed $model
+     */
     public function __construct($model = null)
     {
         if (isset($model)) {
-            $this->_name = $model['name'] ?: null;
-            $this->_city = $model['city'] ?: null;
-            $this->_state = $model['state'] ?: null;
+            if (isset($model->name)) {
+                $this->_name = $model->name;
+            }
+            if (isset($model->city)) {
+                $this->_city = $model->city;
+            }
+            if (isset($model->state)) {
+                $this->_state = $model->state;
+            }
         }
     }
 

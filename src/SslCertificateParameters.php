@@ -2,18 +2,34 @@
 
 namespace Lacuna\Amplia;
 
-
+/**
+ * Class SslCertificateParameters
+ * @package Lacuna\Amplia
+ *
+ * @property $dnsNames array
+ */
 class SslCertificateParameters extends CertificateParameters
 {
+    /**
+     * @private
+     * @var array
+     */
     private $_dnsNames;
 
+    /**
+     * SslCertificateParameters constructor.
+     *
+     * @param mixed $model
+     */
     public function __construct($model = null)
     {
         parent::__construct($model);
         $this->_format = CertificateFormats::SSL;
 
         if (isset($model)) {
-            $this->_dnsNames = $model['dnsNames'] ?: null;
+            if (isset($model->dnsNames)) {
+                $this->_dnsNames = $model->dnsNames;
+            }
         }
     }
 

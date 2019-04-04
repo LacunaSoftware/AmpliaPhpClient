@@ -2,15 +2,42 @@
 
 namespace Lacuna\Amplia;
 
-
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * Class HttpResponse
+ * @package Lacuna\Amplia
+ *
+ * @property $body mixed
+ * @property $statusCode int
+ * @property $headers array
+ */
 class HttpResponse
 {
+    /**
+     * @private
+     * @var mixed
+     */
     private $_body;
+
+    /**
+     * @private
+     * @var int
+     */
     private $_statusCode;
+
+    /**
+     * @private
+     * @var array
+     */
     private $_headers;
 
+    /**
+     * HttpResponse constructor.
+     * @param $body
+     * @param $statusCode
+     * @param $headers
+     */
     private function __construct($body, $statusCode, $headers)
     {
         $this->_body = $body;
@@ -25,7 +52,7 @@ class HttpResponse
     public static function getInstance($response)
     {
         return new HttpResponse(
-            json_decode($response->getBody()),
+            Util::decodeJson($response->getBody()),
             $response->getStatusCode(),
             $response->getHeaders()
         );
@@ -48,7 +75,7 @@ class HttpResponse
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getStatusCode()
     {
@@ -56,7 +83,7 @@ class HttpResponse
     }
 
     /**
-     * @param mixed $statusCode
+     * @param int $statusCode
      */
     public function setStatusCode($statusCode)
     {
@@ -64,7 +91,7 @@ class HttpResponse
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getHeaders()
     {
@@ -79,14 +106,16 @@ class HttpResponse
     {
         if (isset($this->_headers[$key])) {
             return $this->_headers[$key];
-        } else if (isset($this->_headers[strtolower($key)])) {
-            return $this->_headers[strtolower($key)];
+        } else {
+            if (isset($this->_headers[strtolower($key)])) {
+                return $this->_headers[strtolower($key)];
+            }
         }
         return null;
     }
 
     /**
-     * @param mixed $headers
+     * @param array $headers
      */
     public function setHeaders($headers)
     {

@@ -2,31 +2,99 @@
 
 namespace Lacuna\Amplia;
 
-
+/**
+ * Class ArispCartorioInfo
+ * @package Lacuna\Amplia
+ *
+ * @property $cns string
+ * @property $numero string
+ * @property $nome string
+ * @property $oficial string
+ * @property $endereco ArispEndereco
+ * @property $telefone string
+ * @property $site string
+ * @property $email string
+ */
 class ArispCartorioInfo
 {
+    /**
+     * @private
+     * @var string
+     */
     private $_cns;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_numero;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_nome;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_oficial;
+
+    /**
+     * @private
+     * @var ArispEndereco
+     */
     private $_endereco;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_telefone;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_site;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_email;
 
+    /**
+     * ArispCartorioInfo constructor.
+     * @param mixed $model
+     */
     public function __construct($model = null)
     {
         if (isset($model)) {
-            $this->_cns = $model['cns'] ?: null;
-            $this->_numero = $model['numero'] ?: null;
-            $this->_nome = $model['nome'] ?: null;
-            $this->_oficial = $model['oficial'] ?: null;
-            $this->_telefone = $model['telefone'] ?: null;
-            $this->_site = $model['site'] ?: null;
-            $this->_email = $model['email'] ?: null;
-
-            if (isset($model['endereco'])) {
-                $this->_endereco = new ArispEndereco($model['endereco']);
+            if (isset($model->cns)) {
+                $this->_cns = $model->cns;
+            }
+            if (isset($model->numero)) {
+                $this->_numero = $model->numero;
+            }
+            if (isset($model->nome)) {
+                $this->_nome = $model->nome;
+            }
+            if (isset($model->oficial)) {
+                $this->_oficial = $model->oficial;
+            }
+            if (isset($model->telefone)) {
+                $this->_telefone = $model->telefone;
+            }
+            if (isset($model->site)) {
+                $this->_site = $model->site;
+            }
+            if (isset($model->email)) {
+                $this->_email = $model->email;
+            }
+            if (isset($model->endereco)) {
+                $this->_endereco = new ArispEndereco($model->endereco);
             }
         }
     }

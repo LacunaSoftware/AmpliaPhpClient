@@ -2,7 +2,10 @@
 
 namespace Lacuna\Amplia;
 
-
+/**
+ * Class CnbCertificateTypes
+ * @package Lacuna\Amplia
+ */
 class CnbCertificateTypes
 {
     const NOTARY = 'Notary';

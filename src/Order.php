@@ -2,23 +2,37 @@
 
 namespace Lacuna\Amplia;
 
-
+/**
+ * Class Order
+ * @package Lacuna\Amplia
+ *
+ * @property $parameters CertificateParameters
+ */
 class Order extends BaseOrder
 {
+    /**
+     * @private
+     * @var CertificateParameters
+     */
     private $_parameters;
 
+    /**
+     * Order constructor.
+     *
+     * @param mixed $model
+     */
     public function __construct($model = null)
     {
         parent::__construct($model);
         if (isset($model)) {
-            if (isset($model['parameters'])) {
-                $this->_parameters = CertificateParameters::decode($parameters);
+            if (isset($model->parameters)) {
+                $this->_parameters = CertificateParameters::decode($model->parameters);
             }
         }
     }
 
     /**
-     * @return mixed
+     * @return CertificateParameters
      */
     public function getParameters()
     {
@@ -26,7 +40,7 @@ class Order extends BaseOrder
     }
 
     /**
-     * @param mixed $parameters
+     * @param CertificateParameters $parameters
      */
     public function setParameters($parameters)
     {

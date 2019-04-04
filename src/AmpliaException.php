@@ -2,38 +2,80 @@
 
 namespace Lacuna\Amplia;
 
-
+/**
+ * Class AmpliaException
+ * @package Lacuna\Amplia
+ *
+ * The exception that occurs when requesting Amplia and some error has occurred
+ * on server. It contains the information of this error.
+ *
+ * @property $errorCode string The code of error that occurred on Amplia.
+ * @property $errorMessage string The explanation of the error that occurred on
+ *           Amplia.
+ */
 class AmpliaException extends RestException
 {
-    private $_statusCode;
+    /**
+     * @private
+     * @var string
+     *
+     * The code of the error that occurred on Amplia.
+     */
+    private $_errorCode;
+
+    /**
+     * @private
+     * @var string
+     *
+     * The explanation of the error that occurred on Amplia.
+     */
     private $_errorMessage;
 
-    public function __construct($verb, $url, $model, \Exception $previous = null)
-    {
+    /**
+     * AmpliaException constructor.
+     *
+     * @param $verb string The HTTP method used at the request.
+     * @param $url string The request URL.
+     * @param $model mixed The error model provided by Amplia.
+     * @param \Exception|null $previous The exception that cause this exception
+     *        emission.
+     */
+    public function __construct(
+        $verb,
+        $url,
+        $model,
+        \Exception $previous = null
+    ) {
         $message = "Amplia API error {$model->code}: {$model->message}";
         parent::__construct($message, $verb, $url, $previous);
-        $this->_statusCode = $model->code;
+        $this->_errorCode = $model->code;
         $this->_errorMessage = $model->message;
     }
 
     /**
-     * @return mixed
+     * Gets the code of the error.
+     *
+     * @return string The error code.
      */
-    public function getStatusCode()
+    public function getErrorCode()
     {
-        return $this->_statusCode;
+        return $this->_errorCode;
     }
 
     /**
-     * @param mixed $statusCode
+     * Sets the code of the error.
+     *
+     * @param string $errorCode The error code.
      */
-    public function setStatusCode($statusCode)
+    public function setErrorCode($errorCode)
     {
-        $this->_statusCode = $statusCode;
+        $this->_errorCode = $errorCode;
     }
 
     /**
-     * @return mixed
+     * Gets the message of the error.
+     *
+     * @return string The error message.
      */
     public function getErrorMessage()
     {
@@ -41,7 +83,9 @@ class AmpliaException extends RestException
     }
 
     /**
-     * @param mixed $errorMessage
+     * Sets the message of the error.
+     *
+     * @param string $errorMessage The error message.
      */
     public function setErrorMessage($errorMessage)
     {
@@ -51,8 +95,8 @@ class AmpliaException extends RestException
     public function __get($prop)
     {
         switch ($prop) {
-            case 'statusCode':
-                return $this->getStatusCode();
+            case 'errorCode':
+                return $this->getErrorCode();
             case 'errorMessage':
                 return $this->getErrorMessage();
             default:
@@ -63,8 +107,8 @@ class AmpliaException extends RestException
     public function __isset($prop)
     {
         switch ($prop) {
-            case 'statusCode':
-                return isset($this->_statusCode);
+            case 'errorCode':
+                return isset($this->_errorCode);
             case 'errorMessage':
                 return isset($this->_errorMessage);
             default:
@@ -75,8 +119,8 @@ class AmpliaException extends RestException
     public function __set($prop, $value)
     {
         switch ($prop) {
-            case 'statusCode':
-                $this->setStatusCode($value);
+            case 'errorCode':
+                $this->setErrorCode($value);
                 break;
             case 'errorMessage':
                 $this->setErrorMessage($value);

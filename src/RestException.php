@@ -2,21 +2,48 @@
 
 namespace Lacuna\Amplia;
 
-
+/**
+ * Class RestException
+ * @package Lacuna\Amplia
+ *
+ * @property $verb string
+ * @property $url string
+ */
 class RestException extends \Exception
 {
+    /**
+     * @private
+     * @var string
+     */
     private $_verb;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_url;
 
-    public function __construct($message, $verb, $url, \Exception $previous = null)
-    {
+    /**
+     * RestException constructor.
+     *
+     * @param $message
+     * @param $verb
+     * @param $url
+     * @param \Exception|null $previous
+     */
+    public function __construct(
+        $message,
+        $verb,
+        $url,
+        \Exception $previous = null
+    ) {
         parent::__construct($message, 0, $previous);
         $this->_verb = $verb;
         $this->_url = $url;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getVerb()
     {
@@ -24,7 +51,7 @@ class RestException extends \Exception
     }
 
     /**
-     * @param mixed $verb
+     * @param string $verb
      */
     public function setVerb($verb)
     {
@@ -32,7 +59,7 @@ class RestException extends \Exception
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getUrl()
     {
@@ -40,7 +67,7 @@ class RestException extends \Exception
     }
 
     /**
-     * @param mixed $url
+     * @param string $url
      */
     public function setUrl($url)
     {

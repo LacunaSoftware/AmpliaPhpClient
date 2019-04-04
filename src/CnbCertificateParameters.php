@@ -2,7 +2,12 @@
 
 namespace Lacuna\Amplia;
 
-
+/**
+ * Class CnbCertificateParameters
+ * @package Lacuna\Amplia
+ *
+ * @property $certificateType CnbCertificateTypes
+ */
 class CnbCertificateParameters extends PkiBrazilCertificateParameters
 {
     private $_certificateType;
@@ -13,7 +18,9 @@ class CnbCertificateParameters extends PkiBrazilCertificateParameters
         $this->_format = CertificateFormats::CNB;
 
         if (isset($model)) {
-            $this->_certificateType = $model['certificateType'];
+            if (isset($model->certificateType)) {
+                $this->_certificateType = $model->certificateType;
+            }
         }
     }
 

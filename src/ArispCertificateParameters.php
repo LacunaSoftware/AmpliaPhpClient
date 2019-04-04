@@ -2,24 +2,61 @@
 
 namespace Lacuna\Amplia;
 
-
+/**
+ * Class ArispCertificateParameters
+ * @package Lacuna\Amplia
+ *
+ * @property $nome string
+ * @property $cpf string
+ * @property $funcao ArispRoles
+ * @property $cartorio ArispCartorioInfo
+ */
 class ArispCertificateParameters extends CertificateParameters
 {
+    /**
+     * @private
+     * @var string
+     */
     private $_nome;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_cpf;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_funcao;
+
+    /**
+     * @private
+     * @var ArispCartorioInfo
+     */
     private $_cartorio;
 
+    /**
+     * ArispCertificateParameters constructor.
+     * @param mixed $model
+     */
     public function __construct($model = null)
     {
         parent::__construct($model);
         $this->_format = CertificateFormats::ARISP;
         if (isset($model)) {
-            $this->_nome = $model['nome'] ?: null;
-            $this->_cpf = $model['cpf'] ?: null;
-            $this->_funcao = $model['funcao'] ?: null;
-            if (isset($model['cartorio'])) {
-                $this->_cartorio = new ArispCartorioInfo($model['cartorio']);
+            if (isset($model->nome)) {
+                $this->_nome = $model->nome;
+            }
+            if (isset($model->cpf)) {
+                $this->_cpf = $model->cpf;
+            }
+            if (isset($model->funcao)) {
+                $this->_funcao = $model->funcao;
+            }
+            if (isset($model->cartorio)) {
+                $this->_cartorio = new ArispCartorioInfo($model->cartorio);
             }
         }
     }
@@ -57,7 +94,7 @@ class ArispCertificateParameters extends CertificateParameters
     }
 
     /**
-     * @return ArispRoles
+     * @return string
      */
     public function getFuncao()
     {
@@ -65,7 +102,7 @@ class ArispCertificateParameters extends CertificateParameters
     }
 
     /**
-     * @param ArispRoles $funcao
+     * @param string $funcao
      */
     public function setFuncao($funcao)
     {

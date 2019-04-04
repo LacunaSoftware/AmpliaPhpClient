@@ -2,14 +2,53 @@
 
 namespace Lacuna\Amplia;
 
-
+/**
+ * Class CreateOrderRequest
+ * @package Lacuna\Amplia
+ *
+ * @property $caId string
+ * @property $templateId string
+ * @property $kind CertificateKinds
+ * @property $copyFromCertificate string
+ * @property $parameters CertificateParameters
+ * @property $validityEnd string
+ */
 class CreateOrderRequest
 {
+    /**
+     * @private
+     * @var string
+     */
     private $_caId;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_templateId;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_kind;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_copyToCertificate;
+
+    /**
+     * @private
+     * @var CertificateParameters
+     */
     private $_parameters;
+
+    /**
+     * @private
+     * @var string
+     */
     private $_validityEnd;
 
     public function __construct()
@@ -19,7 +58,7 @@ class CreateOrderRequest
     /**
      * @return string
      */
-    public function getCaId()
+    public function getCAId()
     {
         return $this->_caId;
     }
@@ -27,7 +66,7 @@ class CreateOrderRequest
     /**
      * @param string $caId
      */
-    public function setCaId($caId)
+    public function setCAId($caId)
     {
         $this->_caId = $caId;
     }
@@ -49,7 +88,7 @@ class CreateOrderRequest
     }
 
     /**
-     * @return CertificateKinds
+     * @return string
      */
     public function getKind()
     {
@@ -57,7 +96,7 @@ class CreateOrderRequest
     }
 
     /**
-     * @param CertificateKinds $kind
+     * @param string $kind
      */
     public function setKind($kind)
     {
@@ -112,5 +151,86 @@ class CreateOrderRequest
         $this->_validityEnd = $validityEnd;
     }
 
+    public function __get($prop)
+    {
+        switch ($prop) {
+            case 'caId':
+                return $this->getCAId();
+            case 'templateId':
+                return $this->getTemplateId();
+            case 'kind':
+                return $this->getKind();
+            case 'copyToCertificate':
+                return $this->getCopyToCertificate();
+            case 'parameters':
+                return $this->getParameters();
+            case 'validityEnd':
+                return $this->getValidityEnd();
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $prop);
+                return null;
+        }
+    }
 
+    public function __isset($prop)
+    {
+        switch ($prop) {
+            case 'caId':
+                return isset($this->_caId);
+            case 'templateId':
+                return isset($this->_templateId);
+            case 'kind':
+                return isset($this->_kind);
+            case 'copyToCertificate':
+                return isset($this->_copyToCertificate);
+            case 'parameters':
+                return isset($this->_parameters);
+            case 'validityEnd':
+                return isset($this->_validityEnd);
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $prop);
+                return false;
+        }
+    }
+
+    public function __set($prop, $value)
+    {
+        switch ($prop) {
+            case 'caId':
+                $this->setCAId($value);
+                break;
+            case 'templateId':
+                $this->setTemplateId($value);
+                break;
+            case 'kind':
+                $this->setKind($value);
+                break;
+            case 'copyToCertificate':
+                $this->setCopyToCertificate($value);
+                break;
+            case 'parameters':
+                $this->setParameters($value);
+                break;
+            case 'validityEnd':
+                $this->setValidityEnd($value);
+                break;
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $prop);
+        }
+    }
+
+    public function toModel()
+    {
+        $model = [
+            'caId' => $this->_caId,
+            'templateId' => $this->_templateId,
+            'kind' => $this->_kind,
+            'copyToCertificate' => $this->_copyToCertificate,
+            'validityEnd' => $this->_validityEnd
+        ];
+        if (isset($this->_parameters)) {
+            $model['parameters'] = $this->_parameters->toModel();
+        }
+        return $model;
+    }
 }
