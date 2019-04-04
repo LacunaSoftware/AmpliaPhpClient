@@ -6,13 +6,15 @@ namespace Lacuna\Amplia;
  * Class AmpliaClient
  * @package Lacuna\Amplia
  *
- * The class responsible for perform the requests to Lacuna Software's Amplia. Amplia is used to provide certificate
- * lifecycle to applications.
+ * The class responsible for perform the requests to Lacuna Software's Amplia.
+ * Amplia is used to provide certificate lifecycle to applications.
  *
- * @property $endpointUri string The Amplia's endpoint URI to be accessed by this client.
- * @property $apiKey string The Amplia's API KEY to be used on every request to Amplia.
- * @property $usePhpCAInfo bool Option to choose the PHP configuration "curl.cainfo" in order to inform the trusted CA
- * list.
+ * @property $endpointUri string The Amplia's endpoint URI to be accessed by
+ *           this client.
+ * @property $apiKey string The Amplia's API KEY to be used on every request to
+ *           Amplia.
+ * @property $usePhpCAInfo bool Option to choose the PHP configuration
+ *           "curl.cainfo" in order to inform the trusted CA list.
  * @property $caInfoPath string Path to the trusted CA list file cacert.pem.
  */
 class AmpliaClient
@@ -22,7 +24,8 @@ class AmpliaClient
      * @const
      * @var array
      *
-     * API routes list that relates the provided parameters' type with a URL route to Amplia.
+     * API routes list that relates the provided parameters' type with a URL
+     * route to Amplia.
      */
     private static $TYPED_API_ROUTES = [
         CertificateFormats::PKI_BRAZIL => 'pki-brazil',
@@ -72,13 +75,19 @@ class AmpliaClient
     /**
      * AmpliaClient constructor.
      *
-     * @param $endpointUri string The Amplia's endpoint URI to be accessed by this client.
-     * @param $apiKey string The Amplia's API KEY to be used on every request to Amplia.
+     * @param $endpointUri string The Amplia's endpoint URI to be accessed by
+     *        this client.
+     * @param $apiKey string The Amplia's API KEY to be used on every request to
+     *        Amplia.
      * @param bool $usePhpCAInfo
      * @param string|null $caInfoPath
      */
-    public function __construct($endpointUri, $apiKey, $usePhpCAInfo = false, $caInfoPath = null)
-    {
+    public function __construct(
+        $endpointUri,
+        $apiKey,
+        $usePhpCAInfo = false,
+        $caInfoPath = null
+    ) {
         $this->_endpointUri = $endpointUri;
         $this->_apiKey = $apiKey;
         $this->_usePhpCAInfo = $usePhpCAInfo;
@@ -92,8 +101,10 @@ class AmpliaClient
      * @return Order The created order.
      * @throws AmpliaException When a error has occurs on Amplia.
      * @throws OrderLockedException When the required order is locked.
-     * @throws RestErrorException When an unexpected error occurs when requesting Amplia.
-     * @throws RestUnreachableException When the client doesn't reach the Amplia endpoint.
+     * @throws RestErrorException When an unexpected error occurs when
+     *         requesting Amplia.
+     * @throws RestUnreachableException When the client doesn't reach the Amplia
+     *         endpoint.
      */
     public function createOrder($request)
     {
@@ -108,19 +119,23 @@ class AmpliaClient
         $format = $request->parameters->format;
         $typeRouteSegment = $this->_getTypedRouteSegment($format);
 
-        $response = $client->post("api/orders/{$typeRouteSegment}", $request->toModel());
+        $response = $client->post("api/orders/{$typeRouteSegment}",
+            $request->toModel());
         return new Order($response->body);
     }
 
     /**
      * Retrieves an order from Amplia.
      *
-     * @param $orderId string The order's id, which is used to identify the order on Amplia.
+     * @param $orderId string The order's id, which is used to identify the
+     *        order on Amplia.
      * @return Order The retrieved order.
      * @throws AmpliaException When a error has occurs on Amplia.
      * @throws OrderLockedException When the required order is locked.
-     * @throws RestErrorException When an unexpected error occurs when requesting Amplia.
-     * @throws RestUnreachableException When the client doesn't reach the Amplia endpoint.
+     * @throws RestErrorException When an unexpected error occurs when
+     *         requesting Amplia.
+     * @throws RestUnreachableException When the client doesn't reach the Amplia
+     *         endpoint.
      */
     public function getOrder($orderId)
     {
@@ -134,17 +149,23 @@ class AmpliaClient
     }
 
     /**
-     * Retrieves an issuing link for an order to redirect the user to a application that will perform the
-     * issuing the certificate directly on the user's machine. It's possible to pass the return URL, that Amplia will
+     * Retrieves an issuing link for an order to redirect the user to a
+     * application that will perform the issuing the certificate directly on the
+     * user's machine. It's possible to pass the return URL, that Amplia will
      * return after issuing the certificate.
      *
-     * @param $orderId string The order's id, which is used to identify the order on Amplia.
-     * @param string|null $returnUrl The return URL, which is used to redirect the user after issuing the certificate.
-     * @return string The issuing link to redirect the user to issue its certificate.
+     * @param $orderId string The order's id, which is used to identify the
+     *        order on Amplia.
+     * @param string|null $returnUrl The return URL, which is used to redirect
+     *        the user after issuing the certificate.
+     * @return string The issuing link to redirect the user to issue its
+     *         certificate.
      * @throws AmpliaException When a error has occurs on Amplia.
      * @throws OrderLockedException When the required order is locked.
-     * @throws RestErrorException When an unexpected error occurs when requesting Amplia.
-     * @throws RestUnreachableException When the client doesn't reach the Amplia endpoint.
+     * @throws RestErrorException When an unexpected error occurs when
+     *         requesting Amplia.
+     * @throws RestUnreachableException When the client doesn't reach the Amplia
+     *         endpoint.
      */
     public function getOrderIssueLink($orderId, $returnUrl = null)
     {
@@ -166,11 +187,14 @@ class AmpliaClient
     /**
      * Deletes an order on Amplia.
      *
-     * @param $orderId string The order's id, which is used to identify the order on Amplia.
+     * @param $orderId string The order's id, which is used to identify the
+     *        order on Amplia.
      * @throws AmpliaException When a error has occurs on Amplia.
      * @throws OrderLockedException When the required order is locked.
-     * @throws RestErrorException When an unexpected error occurs when requesting Amplia.
-     * @throws RestUnreachableException When the client doesn't reach the Amplia endpoint.
+     * @throws RestErrorException When an unexpected error occurs when
+     *         requesting Amplia.
+     * @throws RestUnreachableException When the client doesn't reach the Amplia
+     *         endpoint.
      */
     public function deleteOrder($orderId)
     {
@@ -207,10 +231,11 @@ class AmpliaClient
     /**
      * @private
      *
-     * Gets the URL route, which is related to the certificate format provided by the CertificateParameters, that will
-     * be used to request Amplia's API.
+     * Gets the URL route, which is related to the certificate format provided
+     * by the CertificateParameters, that will be used to request Amplia's API.
      *
-     * @param $format string The certificate format related to a URL route on Amplia.
+     * @param $format string The certificate format related to a URL route on
+     *        Amplia.
      * @return string The URL route related to be used to call Amplia's API.
      */
     private static function _getTypedRouteSegment($format)
@@ -222,7 +247,8 @@ class AmpliaClient
     }
 
     /**
-     * Gets the Amplia's endpoint URI to be accessed by this client to perform the requests.
+     * Gets the Amplia's endpoint URI to be accessed by this client to perform
+     * the requests.
      *
      * @return string The Amplia's endpoint URI.
      */
@@ -232,7 +258,10 @@ class AmpliaClient
     }
 
     /**
-     * @param string $endpointUri
+     * Sets the Amplia's endpoint URI to be accessed by this client to perform
+     * the requests.
+     *
+     * @param string $endpointUri The Amplia's endpoint URI.
      */
     public function setEndpointUri($endpointUri)
     {
@@ -240,9 +269,9 @@ class AmpliaClient
     }
 
     /**
-     * Gets the Amplia's API KEY to be used on every request to Amplia.
+     * Gets the Amplia's API key to be used on every request to Amplia.
      *
-     * @return string The Amplia's API KEY to be used on Amplia.
+     * @return string The Amplia's API key to be used on Amplia.
      */
     public function getApiKey()
     {
@@ -250,7 +279,9 @@ class AmpliaClient
     }
 
     /**
-     * @param string $apiKey
+     * Sets the Amplia's API key to be used on every request to Amplia.
+     *
+     * @param string $apiKey The Amplia's API key to be used on Amplia.
      */
     public function setApiKey($apiKey)
     {
@@ -258,7 +289,11 @@ class AmpliaClient
     }
 
     /**
-     * @return bool
+     * Gets the option to choose the PHP configuration "curl.cainfo" in order to
+     * inform the trusted CA list.
+     *
+     * @return bool The option to choose the PHP configuration "curl.cainfo" in
+     * order to inform the trusted CA list.
      */
     public function getUsePhpCAInfo()
     {
@@ -266,7 +301,11 @@ class AmpliaClient
     }
 
     /**
-     * @param bool $usePhpCAInfo
+     * Sets the option to choose the PHP configuration "curl.cainfo" in order to
+     * inform the trusted CA list.
+     *
+     * @param bool $usePhpCAInfo The option to choose the PHP configuration
+     * "curl.cainfo" in order to inform the trusted CA list.
      */
     public function setUsePhpCAInfo($usePhpCAInfo)
     {
@@ -274,7 +313,9 @@ class AmpliaClient
     }
 
     /**
-     * @return string
+     * Gets the path of the CA certificate list.
+     *
+     * @return string The CA certificate list's path.
      */
     public function getCAInfoPath()
     {
@@ -282,7 +323,9 @@ class AmpliaClient
     }
 
     /**
-     * @param string $caInfoPath
+     * Sets the path of the CA certificate list.
+     *
+     * @param string $caInfoPath The CA certificate list's path.
      */
     public function setCAInfoPath($caInfoPath)
     {

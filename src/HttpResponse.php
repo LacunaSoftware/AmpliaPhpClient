@@ -106,8 +106,10 @@ class HttpResponse
     {
         if (isset($this->_headers[$key])) {
             return $this->_headers[$key];
-        } else if (isset($this->_headers[strtolower($key)])) {
-            return $this->_headers[strtolower($key)];
+        } else {
+            if (isset($this->_headers[strtolower($key)])) {
+                return $this->_headers[strtolower($key)];
+            }
         }
         return null;
     }

@@ -56,8 +56,13 @@ class RestClient
      * @param bool $usePhpCAInfo
      * @param string|null $caInfoPath
      */
-    public function __construct($endpointUri, $apiKey, $customRequestHeaders = [], $usePhpCAInfo = false, $caInfoPath = null)
-    {
+    public function __construct(
+        $endpointUri,
+        $apiKey,
+        $customRequestHeaders = [],
+        $usePhpCAInfo = false,
+        $caInfoPath = null
+    ) {
         $this->_endpointUri = $endpointUri;
         $this->_apiKey = $apiKey;
         $this->_customRequestHeaders = $customRequestHeaders;
@@ -168,10 +173,10 @@ class RestClient
         }
 
         return new Client([
-            'base_uri'    => $this->_endpointUri,
-            'headers'     => $headers,
+            'base_uri' => $this->_endpointUri,
+            'headers' => $headers,
             'http_errors' => false,
-            'verify'      => $verify
+            'verify' => $verify
         ]);
     }
 
@@ -193,12 +198,14 @@ class RestClient
                 $response = Util::decodeJson($httpResponse->getBody());
                 if ($statusCode == 422 && isset($response->code)) {
                     if ($response->code == ErrorCodes::ORDER_LOCKED) {
-                        $ex = new OrderLockedException($verb, $url, $response->message);
+                        $ex = new OrderLockedException($verb, $url,
+                            $response->message);
                     } else {
                         $ex = new AmpliaException($verb, $url, $response);
                     }
                 } else {
-                    $ex = new RestErrorException($verb, $url, $statusCode, $response->message);
+                    $ex = new RestErrorException($verb, $url, $statusCode,
+                        $response->message);
                 }
             } catch (\Exception $e) {
                 $ex = new RestErrorException($verb, $url, $statusCode);

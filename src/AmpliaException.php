@@ -6,11 +6,12 @@ namespace Lacuna\Amplia;
  * Class AmpliaException
  * @package Lacuna\Amplia
  *
- * The exception that occurs when requesting Amplia and some error has occurred on server. It contains the information
- * of this error.
+ * The exception that occurs when requesting Amplia and some error has occurred
+ * on server. It contains the information of this error.
  *
  * @property $errorCode string The code of error that occurred on Amplia.
- * @property $errorMessage string The explanation of the error that occurred on Amplia.
+ * @property $errorMessage string The explanation of the error that occurred on
+ *           Amplia.
  */
 class AmpliaException extends RestException
 {
@@ -36,10 +37,15 @@ class AmpliaException extends RestException
      * @param $verb string The HTTP method used at the request.
      * @param $url string The request URL.
      * @param $model mixed The error model provided by Amplia.
-     * @param \Exception|null $previous The exception that cause this exception emission.
+     * @param \Exception|null $previous The exception that cause this exception
+     *        emission.
      */
-    public function __construct($verb, $url, $model, \Exception $previous = null)
-    {
+    public function __construct(
+        $verb,
+        $url,
+        $model,
+        \Exception $previous = null
+    ) {
         $message = "Amplia API error {$model->code}: {$model->message}";
         parent::__construct($message, $verb, $url, $previous);
         $this->_errorCode = $model->code;

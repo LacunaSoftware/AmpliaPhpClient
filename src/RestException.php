@@ -31,8 +31,12 @@ class RestException extends \Exception
      * @param $url
      * @param \Exception|null $previous
      */
-    public function __construct($message, $verb, $url, \Exception $previous = null)
-    {
+    public function __construct(
+        $message,
+        $verb,
+        $url,
+        \Exception $previous = null
+    ) {
         parent::__construct($message, 0, $previous);
         $this->_verb = $verb;
         $this->_url = $url;

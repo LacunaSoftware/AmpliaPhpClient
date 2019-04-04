@@ -16,8 +16,12 @@ class OrderLockedException extends RestException
      * @param $message
      * @param \Exception|null $previous
      */
-    public function __construct($verb, $url, $message, \Exception $previous = null)
-    {
+    public function __construct(
+        $verb,
+        $url,
+        $message,
+        \Exception $previous = null
+    ) {
         parent::__construct($message, $verb, $url, $previous);
     }
 }
