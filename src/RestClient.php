@@ -173,10 +173,10 @@ class RestClient
         }
 
         return new Client([
-            'base_uri' => $this->_endpointUri,
-            'headers' => $headers,
+            'base_uri'    => $this->_endpointUri,
+            'headers'     => $headers,
             'http_errors' => false,
-            'verify' => $verify
+            'verify'      => $verify
         ]);
     }
 
