@@ -68,7 +68,7 @@ class RestClient
         $this->_customRequestHeaders = $customRequestHeaders;
         $this->_usePhpCAInfo = $usePhpCAInfo;
 
-        if (!isset($caInfoPath)) {
+        if (isset($caInfoPath)) {
             $this->_caInfoPath = __DIR__ . '/../resources/cacert.pem';
         }
     }
