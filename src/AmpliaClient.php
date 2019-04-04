@@ -9,8 +9,11 @@ namespace Lacuna\Amplia;
  * The class responsible for perform the requests to Lacuna Software's Amplia. Amplia is used to provide certificate
  * lifecycle to applications.
  *
- * @property-read $endpointUri string The Amplia's endpoint URI to be accessed by this client.
- * @property-read $apiKey string The Amplia's API KEY to be used on every request to Amplia.
+ * @property $endpointUri string The Amplia's endpoint URI to be accessed by this client.
+ * @property $apiKey string The Amplia's API KEY to be used on every request to Amplia.
+ * @property $usePhpCAInfo bool Option to choose the PHP configuration "curl.cainfo" in order to inform the trusted CA
+ * list.
+ * @property $caInfoPath string Path to the trusted CA list file cacert.pem.
  */
 class AmpliaClient
 {
@@ -55,15 +58,31 @@ class AmpliaClient
     private $_restClient;
 
     /**
+     * @private
+     * @var bool
+     */
+    private $_usePhpCAInfo;
+
+    /**
+     * @private
+     * @var string
+     */
+    private $_caInfoPath;
+
+    /**
      * AmpliaClient constructor.
      *
      * @param $endpointUri string The Amplia's endpoint URI to be accessed by this client.
      * @param $apiKey string The Amplia's API KEY to be used on every request to Amplia.
+     * @param bool $usePhpCAInfo
+     * @param string|null $caInfoPath
      */
-    public function __construct($endpointUri, $apiKey)
+    public function __construct($endpointUri, $apiKey, $usePhpCAInfo = false, $caInfoPath = null)
     {
         $this->_endpointUri = $endpointUri;
         $this->_apiKey = $apiKey;
+        $this->_usePhpCAInfo = $usePhpCAInfo;
+        $this->_caInfoPath = $caInfoPath;
     }
 
     /**
@@ -168,14 +187,18 @@ class AmpliaClient
      *
      * Gets an client to perform the HTTP requests.
      *
+     * @param $customRequestHeaders array
      * @return RestClient The REST client used to perform the HTTP requests.
      */
-    private function _getRestClient()
+    private function _getRestClient($customRequestHeaders = [])
     {
         if (!isset($this->_restClient)) {
             $this->_restClient = new RestClient(
                 $this->_endpointUri,
-                $this->_apiKey
+                $this->_apiKey,
+                $customRequestHeaders,
+                $this->_usePhpCAInfo,
+                $this->_caInfoPath
             );
         }
         return $this->_restClient;
@@ -205,7 +228,15 @@ class AmpliaClient
      */
     public function getEndpointUri()
     {
-        return $this->endpointUri;
+        return $this->_endpointUri;
+    }
+
+    /**
+     * @param string $endpointUri
+     */
+    public function setEndpointUri($endpointUri)
+    {
+        $this->_endpointUri = $endpointUri;
     }
 
     /**
@@ -215,7 +246,47 @@ class AmpliaClient
      */
     public function getApiKey()
     {
-        return $this->apiKey;
+        return $this->_apiKey;
+    }
+
+    /**
+     * @param string $apiKey
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getUsePhpCAInfo()
+    {
+        return $this->_usePhpCAInfo;
+    }
+
+    /**
+     * @param bool $usePhpCAInfo
+     */
+    public function setUsePhpCAInfo($usePhpCAInfo)
+    {
+        $this->_usePhpCAInfo = $usePhpCAInfo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCAInfoPath()
+    {
+        return $this->_caInfoPath;
+    }
+
+    /**
+     * @param string $caInfoPath
+     */
+    public function setCAInfoPath($caInfoPath)
+    {
+        $this->_caInfoPath = $caInfoPath;
     }
 
     public function __get($prop)
@@ -225,6 +296,10 @@ class AmpliaClient
                 return $this->getEndpointUri();
             case 'apiKey':
                 return $this->getApiKey();
+            case 'usePhpCAInfo':
+                return $this->getUsePhpCAInfo();
+            case 'caInfoPath':
+                return $this->getCAInfoPath();
             default:
                 trigger_error('Undefined property: ' . __CLASS__ . '::$' . $prop);
                 return null;
@@ -238,9 +313,33 @@ class AmpliaClient
                 return isset($this->_endpointUri);
             case 'apiKey':
                 return isset($this->_apiKey);
+            case 'usePhpCAInfo':
+                return isset($this->_usePhpCAInfo);
+            case 'caInfoPath':
+                return isset($this->_caInfoPath);
             default:
                 trigger_error('Undefined property: ' . __CLASS__ . '::$' . $prop);
                 return false;
+        }
+    }
+
+    public function __set($prop, $value)
+    {
+        switch ($prop) {
+            case 'endpointUri':
+                $this->setEndpointUri($value);
+                break;
+            case 'apiKey':
+                $this->setApiKey($value);
+                break;
+            case 'usePhpCAInfo':
+                $this->setUsePhpCAInfo($value);
+                break;
+            case 'caInfoPath';
+                $this->setCAInfoPath($value);
+                break;
+            default:
+                trigger_error('Undefined property: ' . __CLASS__ . '::$' . $prop);
         }
     }
 }

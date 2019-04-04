@@ -13,6 +13,8 @@ use Psr\Http\Message\ResponseInterface;
  * @property $endpointUri string
  * @property $apiKey string
  * @property $customRequestHeaders array
+ * @property $usePhpCAInfo bool
+ * @property $caInfoPath string
  */
 class RestClient
 {
@@ -35,16 +37,35 @@ class RestClient
     private $_customRequestHeaders;
 
     /**
+     * @private
+     * @var bool
+     */
+    private $_usePhpCAInfo;
+
+    /**
+     * @private
+     * @var string
+     */
+    private $_caInfoPath;
+
+    /**
      * RestClient constructor.
      * @param $endpointUri
      * @param $apiKey
      * @param array $customRequestHeaders
+     * @param bool $usePhpCAInfo
+     * @param string|null $caInfoPath
      */
-    public function __construct($endpointUri, $apiKey, $customRequestHeaders = [])
+    public function __construct($endpointUri, $apiKey, $customRequestHeaders = [], $usePhpCAInfo = false, $caInfoPath = null)
     {
         $this->_endpointUri = $endpointUri;
         $this->_apiKey = $apiKey;
         $this->_customRequestHeaders = $customRequestHeaders;
+        $this->_usePhpCAInfo = $usePhpCAInfo;
+
+        if (!isset($caInfoPath)) {
+            $this->_caInfoPath = __DIR__ . '/../resources/cacert.pem';
+        }
     }
 
     /**
@@ -134,10 +155,23 @@ class RestClient
         foreach ($this->_customRequestHeaders as $key => $value) {
             $headers[$key] = $value;
         }
+
+        $verify = true;
+        if (!$this->_usePhpCAInfo) {
+            if (!isset($this->_caInfoPath)) {
+                throw new \UnexpectedValueException('No CA certificates path was provided. Set the "usePhpCAInfo" variable to true if you want to use the default value that your PHP uses.');
+            }
+            if (!file_exists($this->_caInfoPath)) {
+                throw new \InvalidArgumentException("The provided cacert file does not exist: {$this->_caInfoPath}.");
+            }
+            $verify = $this->_caInfoPath;
+        }
+
         return new Client([
             'base_uri'    => $this->_endpointUri,
             'headers'     => $headers,
             'http_errors' => false,
+            'verify'      => $verify
         ]);
     }
 
@@ -240,6 +274,38 @@ class RestClient
         }
     }
 
+    /**
+     * @return bool
+     */
+    public function getUsePhpCAInfo()
+    {
+        return $this->_usePhpCAInfo;
+    }
+
+    /**
+     * @param bool $usePhpCAInfo
+     */
+    public function setUsePhpCAInfo($usePhpCAInfo)
+    {
+        $this->_usePhpCAInfo = $usePhpCAInfo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCAInfoPath()
+    {
+        return $this->_caInfoPath;
+    }
+
+    /**
+     * @param string $caInfoPath
+     */
+    public function setCAInfoPath($caInfoPath)
+    {
+        $this->_caInfoPath = $caInfoPath;
+    }
+
     public function __get($prop)
     {
         switch ($prop) {
@@ -249,6 +315,10 @@ class RestClient
                 return $this->getApiKey();
             case 'customRequestHeaders':
                 return $this->getCustomRequestHeaders();
+            case 'usePhpCAInfo':
+                return $this->getUsePhpCAInfo();
+            case 'caInfoPath':
+                return $this->getCAInfoPath();
             default:
                 trigger_error('Undefined property: ' . __CLASS__ . '::$' . $prop);
                 return null;
@@ -264,6 +334,10 @@ class RestClient
                 return isset($this->_apiKey);
             case 'customRequestHeaders':
                 return isset($this->_customRequestHeaders);
+            case 'usePhpCAInfo':
+                return isset($this->_usePhpCAInfo);
+            case 'caInfoPath':
+                return isset($this->_caInfoPath);
             default:
                 trigger_error('Undefined property: ' . __CLASS__ . '::$' . $prop);
                 return false;
@@ -281,6 +355,12 @@ class RestClient
                 break;
             case 'customRequestHeaders':
                 $this->setCustomRequestHeaders($value);
+                break;
+            case 'usePhpCAInfo':
+                $this->setUsePhpCAInfo($value);
+                break;
+            case 'caInfoPath':
+                $this->setCAInfoPath($value);
                 break;
             default:
                 trigger_error('Undefined property: ' . __CLASS__ . '::$' . $prop);
