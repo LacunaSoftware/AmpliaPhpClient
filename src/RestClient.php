@@ -69,7 +69,7 @@ class RestClient
         $this->_usePhpCAInfo = $usePhpCAInfo;
 
         if (!isset($caInfoPath)) {
-            $caInfoPath = __DIR__ . '/../resources/cacert.pem';
+            $caInfoPath = __DIR__ . '/../resources/ca-bundle.pem';
         }
         $this->_caInfoPath = $caInfoPath;
     }
