@@ -69,8 +69,9 @@ class RestClient
         $this->_usePhpCAInfo = $usePhpCAInfo;
 
         if (!isset($caInfoPath)) {
-            $this->_caInfoPath = __DIR__ . '/../resources/cacert.pem';
+            $caInfoPath = __DIR__ . '/../resources/cacert.pem';
         }
+        $this->_caInfoPath = $caInfoPath;
     }
 
     /**
@@ -173,10 +174,10 @@ class RestClient
         }
 
         return new Client([
-            'base_uri' => $this->_endpointUri,
-            'headers' => $headers,
+            'base_uri'    => $this->_endpointUri,
+            'headers'     => $headers,
             'http_errors' => false,
-            'verify' => $verify
+            'verify'      => $verify
         ]);
     }
 
