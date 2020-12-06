@@ -48,6 +48,18 @@ class BaseCertificate
         }
     }
 
+    public function getContentRaw()
+    {
+        if (empty($this->contentBase64)) {
+            return null;
+        }
+        return base64_decode($this->contentBase64);
+    }
+
+    public function setContentRaw($contentRaw) {
+        $this->contentBase64 = base64_encode($contentRaw);
+    }
+
     public function toModel()
     {
         if (isset($this->subjectName) && !($this->subjectName instanceof Name)) {
