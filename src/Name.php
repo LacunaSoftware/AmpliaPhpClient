@@ -24,21 +24,21 @@ class Name
 
     public function __construct($model)
     {
-        $this->country = $model['country'];
-        $this->organization = $model['organization'];
-        $this->organizationUnit = $model['organizationUnit'];
-        $this->dnQualifier = $model['dnQualifier'];
-        $this->stateName = $model['stateName'];
-        $this->commonName = $model['commonName'];
-        $this->serialNumber = $model['serialNumber'];
-        $this->locality = $model['locality'];
-        $this->title = $model['title'];
-        $this->surname = $model['surname'];
-        $this->givenName = $model['givenName'];
-        $this->initials = $model['initials'];
-        $this->pseudonym = $model['pseudonym'];
-        $this->generationQualifier = $model['generationQualifier'];
-        $this->emailAddress = $model['emailAddress'];
+        $this->country = $model->country;
+        $this->organization = $model->organization;
+        $this->organizationUnit = $model->organizationUnit;
+        $this->dnQualifier = $model->dnQualifier;
+        $this->stateName = $model->stateName;
+        $this->commonName = $model->commonName;
+        $this->serialNumber = $model->serialNumber;
+        $this->locality = $model->locality;
+        $this->title = $model->title;
+        $this->surname = $model->surname;
+        $this->givenName = $model->givenName;
+        $this->initials = $model->initials;
+        $this->pseudonym = $model->pseudonym;
+        $this->generationQualifier = $model->generationQualifier;
+        $this->emailAddress = $model->emailAddress;
     }
 
     public function toModel()
