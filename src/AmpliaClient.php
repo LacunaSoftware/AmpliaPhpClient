@@ -207,6 +207,102 @@ class AmpliaClient
     }
 
     /**
+     * Issues an certificate.
+     *
+     * @param $orderId string The order's id, which is used to identify the
+     *        order on Amplia.
+     * @param $csr string certificate signing request.
+     * @return Certificate The certificate object.
+     * @throws AmpliaException When a error has occurs on Amplia.
+     * @throws OrderLockedException When the required order is locked.
+     * @throws RestErrorException When an unexpected error occurs when
+     *         requesting Amplia.
+     * @throws RestUnreachableException When the client doesn't reach the Amplia
+     *         endpoint.
+     */
+    public function issueCertificate($orderId, $csr)
+    {
+        $client = $this->_getRestClient();
+        $request = new IssueCertificateRequest($orderId, $csr);
+
+        $response = $client->post('api/v2/certificates', $request->toModel());
+        return new Certificate($response->body);
+    }
+
+    /**
+     * Lists the certificates
+     *
+     * @param null $searchParams Parameters that will be used to filter the list returned.
+     * @param false $validOnly Filter only valid certificates.
+     * @return PaginatedSearchResponse the result fo the search.
+     * @throws AmpliaException When a error has occurs on Amplia.
+     * @throws OrderLockedException When the required order is locked.
+     * @throws RestErrorException When an unexpected error occurs when
+     *         requesting Amplia.
+     * @throws RestUnreachableException When the client doesn't reach the Amplia
+     *         endpoint.
+     */
+    public function listCertificates($searchParams = null, $validOnly = false)
+    {
+        if (isset($searchParams) && !($searchParams instanceof PaginatedSearchParams)) {
+            throw new \RuntimeException("The \"searchParams\" parameter is not a instance of the PaginatedSearchParams class.");
+        }
+        $client = $this->_getRestClient();
+        $url = self::_setPaginatedSearchParams('api/v2/certificates', $searchParams ?: new PaginatedSearchParams()) . "&validOnly={$validOnly}";
+
+        $response = $client->get($url);
+        return new PaginatedSearchResponse($response->body, function ($i) {
+            return new CertificateSummary($i);
+        });
+    }
+
+    /**
+     * Retrieves the certificate's info.
+     *
+     * @param $certificateId string The certificates's ID.
+     * @param false $fillContent The option to fill the certificate's content in the object.
+     * @return Certificate The certificate object.
+     * @throws AmpliaException When a error has occurs on Amplia.
+     * @throws OrderLockedException When the required order is locked.
+     * @throws RestErrorException When an unexpected error occurs when
+     *         requesting Amplia.
+     * @throws RestUnreachableException When the client doesn't reach the Amplia
+     *         endpoint.
+     */
+    public function getCertificate($certificateId, $fillContent = false)
+    {
+        if (empty($certificateId)) {
+            throw new \RuntimeException("The certificateId was not provided");
+        }
+        $client = $this->_getRestClient();
+
+        $response = $client->get("api/v2/certificates/{$certificateId}?fillContent={$fillContent}");
+        return new Certificate($response->body);
+    }
+
+    /**
+     * Revokes a certificate.
+     *
+     * @param $certificateId string The certificates's ID.
+     *
+     * @throws AmpliaException When a error has occurs on Amplia.
+     * @throws OrderLockedException When the required order is locked.
+     * @throws RestErrorException When an unexpected error occurs when
+     *         requesting Amplia.
+     * @throws RestUnreachableException When the client doesn't reach the Amplia
+     *         endpoint.
+     */
+    public function revokeCertificate($certificateId)
+    {
+        if (empty($certificateId)) {
+            throw new \RuntimeException("The certificateId was not provided");
+        }
+        $client = $this->_getRestClient();
+
+        $client->delete("api/certificates/{$certificateId}");
+    }
+
+    /**
      * @private
      *
      * Gets an client to perform the HTTP requests.
@@ -226,6 +322,24 @@ class AmpliaClient
             );
         }
         return $this->_restClient;
+    }
+
+    /**
+     * @private
+     *
+     * Builds the URL that will be called in a search request.
+     *
+     * @param $originalUri string The original URI.
+     * @param $searchParams PaginatedSearchParams The search parameters.
+     * @return string The resulting URL.
+     */
+    private static function _setPaginatedSearchParams($originalUri, $searchParams)
+    {
+        return "{$originalUri}?" .
+            "q=" . urlencode($searchParams->q) . "&" .
+            "limit={$searchParams->limit}&" .
+            "offset={$searchParams->offset}&" .
+            "order={$searchParams->order}";
     }
 
     /**
