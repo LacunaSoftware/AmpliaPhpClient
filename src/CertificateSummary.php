@@ -22,18 +22,18 @@ class CertificateSummary
 
     public function __construct($model)
     {
-        $this->id = $model['id'];
-        $this->subscriptionId = $model['subscriptionId'];
-        $this->caId = $model['caId'];
-        $this->keyId = $model['keyId'];
-        $this->dateIssued = $model['dateIssued'];
-        $this->dateExpires = $model['dateExpires'];
-        $this->dateRevoked = $model['dateRevoked'];
-        $this->alias = $model['alias'];
-        $this->subjectDisplayName = $model['subjectDisplayName'];
-        $this->serialNumber = $model['serialNumber'];
-        $this->isCA = $model['isCA'];
-        $this->kind = $model['kind'];
-        $this->format = $model['format'];
+        $this->id = $model->id;
+        $this->subscriptionId = $model->subscriptionId;
+        $this->caId = $model->caId;
+        $this->keyId = $model->keyId;
+        $this->dateIssued = $model->dateIssued;
+        $this->dateExpires = $model->dateExpires;
+        $this->dateRevoked = $model->dateRevoked;
+        $this->alias = $model->alias;
+        $this->subjectDisplayName = $model->subjectDisplayName;
+        $this->serialNumber = $model->serialNumber;
+        $this->isCA = $model->isCA;
+        $this->kind = $model->kind;
+        $this->format = $model->format;
     }
 }

@@ -12,8 +12,8 @@ class Certificate extends BaseCertificate
     {
         parent::__construct($model);
 
-        if (isset($model['parameters'])) {
-            $this->parameters = CertificateParameters::decode($model['parameters']);
+        if (isset($model->parameters)) {
+            $this->parameters = CertificateParameters::decode($model->parameters);
         }
     }
 

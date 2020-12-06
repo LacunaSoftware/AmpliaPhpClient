@@ -23,27 +23,27 @@ class BaseCertificate
 
     public function __construct($model)
     {
-        $this->id = $model['id'];
-        $this->caId = $model['caId'];
-        $this->alias = $model['alias'];
-        $this->serialNumber = $model['serialNumber'];
-        $this->contentBase64 = $model['content'];
-        $this->kind = $model['kind'];
-        $this->format = $model['format'];
+        $this->id = $model->id;
+        $this->caId = $model->caId;
+        $this->alias = $model->alias;
+        $this->serialNumber = $model->serialNumber;
+        $this->contentBase64 = $model->content;
+        $this->kind = $model->kind;
+        $this->format = $model->format;
 
-        if (isset($model['info'])) {
-            $this->emailAddress = $model['info']['emailAddress'];
-            $this->validityStart = $model['info']['validityStart'];
-            $this->validityEnd = $model['info']['validityEnd'];
-            $this->crlDistributionPoints = $model['info']['crlDistributionPoints'];
-            $this->ocspUris = $model['info']['ocspUris'];
+        if (isset($model->info)) {
+            $this->emailAddress = $model->info->emailAddress;
+            $this->validityStart = $model->info->validityStart;
+            $this->validityEnd = $model->info->validityEnd;
+            $this->crlDistributionPoints = $model->info->crlDistributionPoints;
+            $this->ocspUris = $model->info->ocspUris;
 
-            if (isset($model['info']['subjectName'])) {
-                $this->subjectName = new Name($model['info']['subjectName']);
+            if (isset($model->info->subjectName)) {
+                $this->subjectName = new Name($model->info->subjectName);
             }
 
-            if (isset($model['info']['issuerName'])) {
-                $this->issuerName = new Name($model['info']['issuerName']);
+            if (isset($model->info->issuerName)) {
+                $this->issuerName = new Name($model->info->issuerName);
             }
         }
     }
