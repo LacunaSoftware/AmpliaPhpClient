@@ -303,6 +303,28 @@ class AmpliaClient
     }
 
     /**
+     * @param $request CreateUserOrderRequest The request used to create an order.
+     * @return Order The created order.
+     * @throws AmpliaException When a error has occurs on Amplia.
+     * @throws OrderLockedException When the required order is locked.
+     * @throws RestErrorException When an unexpected error occurs when
+     *         requesting Amplia.
+     * @throws RestUnreachableException When the client doesn't reach the Amplia
+     *         endpoint.
+     */
+    public function createUserOrder($request)
+    {
+        if (!isset($request)) {
+            throw new \InvalidArgumentException('The provided "request" cannot have a null value.');
+        }
+        $client = $this->_getRestClient();
+
+        $response = $client->post("api/orders/create-user-order",
+            $request->toModel());
+        return new Order($response->body);
+    }
+
+    /**
      * @private
      *
      * Gets an client to perform the HTTP requests.
