@@ -71,6 +71,8 @@ class CertificateParameters
                 return new CieCertificateParameters($model);
             case CertificateFormats::ARISP:
                 return new ArispCertificateParameters($model);
+            case CertificateFormats::CUSTOM:
+                return new CustomCertificateParameters($model);
             default:
                 throw new \InvalidArgumentException("The certificate \"format\" field not supported on model for CertificateParameters: {$format}");
         }

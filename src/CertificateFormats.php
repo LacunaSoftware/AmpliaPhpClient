@@ -14,4 +14,5 @@ class CertificateFormats
     const CNB_CA = 'CnbCA';
     const CIE = 'Cie';
     const ARISP = 'Arisp';
+    const CUSTOM = 'Custom';
 }
