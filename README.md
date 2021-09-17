@@ -6,7 +6,7 @@ The recommend way to install **Amplia Client Lib** is through
 [Composer](http://getcomposer.org):
 
     "require": {
-        "lacuna/amplia-client": "^1.1.1"
+        "lacuna/amplia-client": "^1.2.0"
     }
     
 This library depends on the GuzzleHttp package, which in turn requires PHP 5.5 or
